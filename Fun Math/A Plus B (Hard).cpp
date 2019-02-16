@@ -1,245 +1,191 @@
-#include <iostream>
 #include <bits/stdc++.h>
+#define INF 0x3f3f3f3f
 
 using namespace std;
+char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+map<char, int> numbers;
+string a, b;
 
-string a, b, result;
-
-bool smaller(string a, string b)
+void init()
 {
-  int aSize = a.length(), bSize = b.length();
+    numbers['0'] = 0;
+    numbers['1'] = 1;
+    numbers['2'] = 2;
+    numbers['3'] = 3;
+    numbers['4'] = 4;
+    numbers['5'] = 5;
+    numbers['6'] = 6;
+    numbers['7'] = 7;
+    numbers['8'] = 8;
+    numbers['9'] = 9;
+}
 
-  if (aSize < bSize)
-  {
-    return true;
-  }
-  else if (aSize > bSize)
-  {
-    return false;
-  }
-  else
-  {
-    for (int i = 0; i < aSize; ++i)
+string add()
+{
+    if (a.length() < b.length())
     {
-      if (a[i] < b[i])
-      {
+        swap(a, b);
+    }
+
+    int dif = a.length() - b.length();
+
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    for (int i = 0; i < dif; ++i)
+    {
+        b += "0";
+    }
+
+    string ans = "";
+
+    int n = a.length();
+    int carry = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        int result = numbers[a[i]] + numbers[b[i]] + carry;
+        carry = 0;
+        int first = result % 10;
+        carry = result / 10;
+        ans += digits[first];
+    }
+
+    if (carry != 0) ans += digits[carry];
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+bool bigger(string n1, string n2)
+{
+    if(n1.length() == n2.length())
+    {
+        int n = n1.length();
+        for (int i = 0; i < n; ++i)
+        {
+            int num1 = numbers[n1[i]];
+            int num2 = numbers[n2[i]];
+
+            if (num1 == num2) continue;
+            return num1 > num2;
+        }
+
         return true;
-      }
-      else if (a[i] > b[i])
-      {
-        return false;
-      }
     }
 
-    return false;
-  }
+    return n1.length() > n2.length();
 }
 
-string difference(string a, string b)
+string dif()
 {
-  if (smaller(a, b))
-  {
-    swap(a, b);
-  }
-
-  int aSize = a.length(), bSize = b.length();
-  int difference = aSize - bSize;
-  string result = "";
-  int carry = 0;
-  int subtraction;
-
-  for (int i = b.length() - 1; i >= 0; --i)
-  {
-    subtraction = ((a[i + difference]-'0') - (b[i]-'0') - carry);
-
-    if (subtraction < 0)
+    if (!bigger(a, b))
     {
-      subtraction += 10;
-      carry = 1;
-    }
-    else
-    {
-      carry = 0;
+        swap(a, b);
     }
 
-    result.push_back(subtraction + '0');
-  }
+    string ans = "";
+    int dif = a.length() - b.length();
 
-  for (int i = aSize - bSize - 1; i >= 0; --i)
-  {
-    if (a[i] == '0' && carry > 0)
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    for (int i = 0; i < dif; ++i)
     {
-      result.push_back('9');
-      continue;
+        b += "0";
     }
 
-    subtraction = ((a[i]-'0') - carry);
-
-    if (i > 0 || subtraction > 0)
+    int n = a.length();
+    int carry = 0;
+    for (int i = 0; i < n; ++i)
     {
-      result.push_back(subtraction +'0');
-    }
+        int a_num = numbers[a[i]];
+        int b_num = numbers[b[i]];
+        int result = a_num - b_num - carry;
+        carry = 0;
 
-    carry = 0;
-  }
-
-  reverse(result.begin(), result.end());
-  
-  return result;
-}
-
-string findDiff(string str1, string str2) 
-{ 
-    // Before proceeding further, make sure str1 
-    // is not smaller 
-    if (smaller(str1, str2)) 
-        swap(str1, str2); 
-  
-    // Take an empty string for storing result 
-    string str = ""; 
-  
-    // Calculate lengths of both string 
-    int n1 = str1.length(), n2 = str2.length(); 
-    int diff = n1 - n2; 
-  
-    // Initially take carry zero 
-    int carry = 0; 
-  
-    // Traverse from end of both strings 
-    for (int i=n2-1; i>=0; i--) 
-    { 
-        // Do school mathematics, compute difference of 
-        // current digits and carry 
-        int sub = ((str1[i+diff]-'0') - 
-                   (str2[i]-'0') - 
-                   carry); 
-        if (sub < 0) 
-        { 
-            sub = sub+10; 
-            carry = 1; 
-        } 
+        if (result >= 0)
+        {
+            ans += digits[result];
+        }
         else
-            carry = 0; 
-  
-        str.push_back(sub + '0'); 
-    } 
-  
-    // subtract remaining digits of str1[] 
-    for (int i=n1-n2-1; i>=0; i--) 
-    { 
-        if (str1[i]=='0' && carry) 
-        { 
-            str.push_back('9'); 
-            continue; 
-        } 
-        int sub = ((str1[i]-'0') - carry); 
-        if (i>0 || sub>0) // remove preceding 0's 
-            str.push_back(sub+'0'); 
-        carry = 0; 
-  
-    } 
-  
-    // reverse resultant string 
-    reverse(str.begin(), str.end()); 
-  
-    return str; 
-} 
+        {
+            carry = 1;
+            ans += digits[result + 10];
+        }
+    }
 
-string sum(string a, string b)
-{
-  if (a.length() > b.length())
-  {
-    swap(a, b);
-  }
+    reverse(ans.begin(), ans.end());
 
-  string result = "";
-  int aSize = a.length(), bSize = b.length();
-  int sizeDifference = aSize - bSize;
-  int carry = 0;
-  int sum;
+    int pivot = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        if (ans[i] == '0')
+        {
+            pivot = i + 1;
+        }
+        else
+        {
+            break;
+        }
+    }
 
-  for (int i = aSize - 1; i >= 0; --i)
-  {
-      sum = ((a[i]-'0') + (b[i + sizeDifference]-'0') + carry);
-      result.push_back(sum % 10 + '0');
-      carry = sum / 10;
-  }
+    ans = ans.substr(pivot);
 
-  for (int i = bSize - aSize - 1; i >= 0; --i)
-  {
-      sum = ((b[i] + '0') + carry);
-      result.push_back(sum % 10 + '0');
-      carry = sum / 10;
-  }
-
-  if (carry > 0)
-  {
-      result.push_back(carry + '0');
-  }
-
-  reverse(result.begin(), result.end());
-
-  return result;
+    return ans;
 }
 
-int main() {
-  cin.sync_with_stdio(0);
-  cin.tie(0);    
+string solve()
+{
+    bool a_neg = a[0] == '-';
+    bool b_neg = b[0] == '-';
 
-  int n = 0;
-  cin >> n;
+    if (a_neg) a = a.substr(1);
+    if (b_neg) b = b.substr(1);
 
-  for (int i = 0; i < n; ++i)
-  {
-    cin >> a >> b;
+    if (a_neg != b_neg)
+    {
+        bool a_bigger = bigger(a, b);
+        string ans = dif();
 
-    if (a[0] != '-' && b[0] != '-')
-    {
-      result = sum(a, b);
-    }
-    else if (a[0] == '-' && b[0] == '-')
-    {
-      result = "-" + sum(a.substr(1), b.substr(1));
-    }
-    else if (a[0] == '-')
-    {
-      if (smaller(a.substr(1), b))
-      {
-        result = difference(a.substr(1), b);
-      }
-      else
-      {
-        result = "-" + difference(a.substr(1), b);
-      }
+        if ((a_neg && a_bigger) || (b_neg && !a_bigger))
+        {
+            return "-" + ans;
+        }
+        else
+        {
+            return ans;
+        }
     }
     else
     {
-      if (smaller(b.substr(1), a))
-      {
-        result = difference(a, b.substr(1));
-      }
-      else
-      {
-        result = "-" + difference(a, b.substr(1));
-      }
+        if (a_neg && b_neg)
+        {
+            return "-" + add();
+        }
+        else
+        {
+            return add();
+        }
     }
+}
 
-  if (result[0] == '0')
-  {
-    result = result.substr(1);
-  }
+int main()
+{
+    init();
+    cin.sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
 
-  if (result[0] == '-' && result[1] == '0' && result.length() > 2)
-  {
-    result = "-" + result.substr(2);
-  }
+    int m; cin >> m;
 
-  if (result == "-0")
-  {
-    result = "0";
-  }
+    while (m--)
+    {
+        cin >> a >> b;
+        string ans = solve();
+        if (ans == "-" || ans == "")
+        {
+            ans = "0";
+        }
 
-    cout << result << "\n";
-  }
-
+        cout << ans << endl;
+    }
 }
