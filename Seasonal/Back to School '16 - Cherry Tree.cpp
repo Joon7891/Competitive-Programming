@@ -53,14 +53,8 @@ int main()
     }
 
     dfs(1, -1);
-
-    if (adj[1].size() == 1)
-    {
-        totalC[1] += c[1];
-        w[1] += adj[1][0].second;
-    }
-
-    for (int i = 1; i <= N; ++i)
+    
+    for (int i = 2; i <= N; ++i)
     {
         if (totalC[i] >= C && w[i] <= W) total++;
     }
