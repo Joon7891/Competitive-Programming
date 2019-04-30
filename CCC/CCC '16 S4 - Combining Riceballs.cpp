@@ -40,7 +40,6 @@ int state(int left, int right)
     {
         for (int start = left + 1; start + length - 1 < right; ++start)
         {
-            // Don't make multiple recursive calls - above loop makes all calls
             if (dp[left][start - 1] && dp[start][start + length - 1] && dp[start + length][right])
             {
                 int lSum = psa[start - 1] - psa[left - 1];

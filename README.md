@@ -15,4 +15,5 @@
 - USACO February Contest 2019, Bronze (1000/1000)
 - USACO February Contest 2019, Silver (917/1000)
 - CCC 2019 (39/75)
-- ECOO 2019 Round 1 (3rd/70 Teams)
+- ECOO 2019 Round 1 (3rd/69 Teams)
+- ECOO 2019 Round 2 (10th/68 Teams)

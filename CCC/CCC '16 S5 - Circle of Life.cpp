@@ -1,59 +1,57 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef long long LL;
+const int MAXN = 100005;
 
-bool *currentGame;
-bool *newGame;
-long long n, t;
+bool aft[MAXN];
+bool cur[MAXN];
+LL N, T;
 
-long long getPow(long long a)
+LL getJump()
 {
-    unsigned long long answer = 1;
-
-    // 64 as it is the max bits of a long long
-    for (int i = 0; i < 64; ++i)
+    LL ans = 1;
+    for (int i = 0; i < 62; ++i)
     {
-        answer <<= 1;
+        ans <<= 1;
 
-        if(answer > a)
+        if (ans > T)
         {
-            answer >>= 1;
-            return (long long)answer;
+            ans >>= 1;
+            return (LL)ans;
         }
     }
 
-    return (long long) answer;
+    return (LL)ans;
 }
 
 int main()
 {
-    cin.sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    
-    cin >> n >> t;
-    string input; cin >> input;
-    currentGame = new bool[n];
-    newGame = new bool[n];
-    for (int i = 0; i < n; ++i) currentGame[i] = input[i] == '1';
+    cin >> N >> T;
 
-    long long powJump;
-    long long index1, index2;
-    while (t > 0)
+    string line;
+    cin >> line;
+
+    for (int i = 0; i < N; ++i)
     {
-        powJump = getPow(t);
-
-        for (int i = 0; i < n; ++i)
-        {
-            index1 = (i - powJump % n + n) % n;
-            index2 = (i + powJump % n) % n;
-            newGame[i] = currentGame[index1] ^ currentGame[index2];
-        }
-
-        currentGame = newGame;
-        newGame = new bool[n];
-        t -= powJump;
+        cur[i] = line[i] == '1';
     }
 
-    for (int i = 0; i < n; ++i) cout << currentGame[i];
+    while (T)
+    {
+        LL jump = getJump();
+
+        for (int i = 0; i < N; ++i)
+        {
+            LL left = (i - jump % N + N) % N;
+            LL right = (i + jump % N) % N;
+            aft[i] = cur[left] ^ cur[right];
+        }
+
+        copy(aft, aft + N, cur);
+        T -= jump;
+    }
+
+    for (int i = 0; i < N; ++i) cout << cur[i];
     cout << "\n";
 }

@@ -11,32 +11,10 @@ vector<char> alphabet;
 
 void init()
 {
-    alphabet.push_back('a');
-    alphabet.push_back('b');
-    alphabet.push_back('c');
-    alphabet.push_back('d');
-    alphabet.push_back('e');
-    alphabet.push_back('f');
-    alphabet.push_back('g');
-    alphabet.push_back('h');
-    alphabet.push_back('i');
-    alphabet.push_back('j');
-    alphabet.push_back('k');
-    alphabet.push_back('l');
-    alphabet.push_back('m');
-    alphabet.push_back('n');
-    alphabet.push_back('o');
-    alphabet.push_back('p');
-    alphabet.push_back('q');
-    alphabet.push_back('r');
-    alphabet.push_back('s');
-    alphabet.push_back('t');
-    alphabet.push_back('u');
-    alphabet.push_back('v');
-    alphabet.push_back('w');
-    alphabet.push_back('x');
-    alphabet.push_back('y');
-    alphabet.push_back('z');
+    for (char c = 'a'; c <= 'z'; ++c)
+    {
+        alphabet.push_back(c);
+    }
 }
 
 int main()
