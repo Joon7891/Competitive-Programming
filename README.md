@@ -6,8 +6,8 @@
 - Currently help maintain [Stephen Lewis' Online Judge](https://ssoj.ca/) as an administrator and problem setter
 
 **Profiles:**
-- [SSOJ](https://ssoj.ca/user/Joon7891)
 - [DMOJ](https://dmoj.ca/user/Joon7891)
+- [LeetCode](https://leetcode.com/joon7891/)
 - [Codeforces](https://codeforces.com/profile/Joon7891)
 
 **Contests:**
