@@ -1,9 +1,9 @@
 # Competitive Programming
 
 **About Me:**
-- Started competitive programming in March 2018
-- Solved over 300 problems on various judges using Python, Java, and C++
-- Currently help maintain [Stephen Lewis' Online Judge](https://ssoj.ca/) as an administrator and problem setter
+- Started competitive programming in March 2018.
+- Solved over 400 problems on various judges using Python, Java, and C++.
+- Currently help maintain [Stephen Lewis' Online Judge](https://ssoj.ca/) as an administrator and problem setter.
 
 **Profiles:**
 - [DMOJ](https://dmoj.ca/user/Joon7891)
